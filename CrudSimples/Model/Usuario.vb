@@ -103,6 +103,7 @@ Public Class Usuario
 #Region "Metodos"
 
     Public Function Incluir(objUsuario As Usuario) As String
+        'escalar / nonquery
         Try
             'Conexão com o banco de dados
             Dim strConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
@@ -123,6 +124,38 @@ Public Class Usuario
         Catch ex As Exception
             Return Nothing
         End Try
+    End Function
+
+    Public Function Exibir(intId As Integer) As Usuario
+        'datareader
+        Try
+            Dim strConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
+            Dim conexaoDB As New SqlConnection(strConexao)
+            Dim strSql As String = "SELECT * FROM Usuario where id =" & intId
+
+            Dim Cmd As New SqlCommand(strSql, conexaoDB)
+            conexaoDB.Open()
+
+            Dim drUsuario As SqlDataReader
+
+            drUsuario = Cmd.ExecuteReader
+            Dim objUsuario As New Usuario
+            objUsuario.ID = intId
+
+            objUsuario.Nome = drUsuario("nome")
+            objUsuario.DataNascimento = drUsuario("dt_nascimento")
+            objUsuario.Sexo = drUsuario("sexo")
+            objUsuario.Email = drUsuario("email")
+            objUsuario.Cidade = drUsuario("cidade")
+            objUsuario.Estado = drUsuario("estado")
+            objUsuario.Pais = drUsuario("usuario")
+            objUsuario.DtCadastro = drUsuario("dt_cadastro")
+
+            Return objUsuario
+        Catch ex As Exception
+            Return Nothing
+        End Try
+
     End Function
 
 #End Region
