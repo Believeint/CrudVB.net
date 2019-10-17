@@ -1,4 +1,8 @@
-﻿Public Class Usuario
+﻿Imports System.Data.SqlClient
+Imports System.Globalization
+Imports System.Threading
+
+Public Class Usuario
 
 #Region "Variáveis"
     Private _id As Integer
@@ -94,6 +98,33 @@
             _dtCadastro = value
         End Set
     End Property
+#End Region
+
+#Region "Metodos"
+
+    Public Function Incluir(objUsuario As Usuario) As String
+        Try
+            'Conexão com o banco de dados
+            Dim strConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
+            Dim conexaoDB As New SqlConnection(strConexao)
+
+            Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US", False)
+
+            Dim strSql As String = "INSERT INTO Usuario(nome, data_nascimento, sexo, email, cidade, estado, pais, data_cadastro)
+                                    VALUES ('" & objUsuario.Nome & "', '" & objUsuario.DataNascimento & "', '" & objUsuario.Sexo & "', '" & objUsuario.Email & "',
+                                            '" & objUsuario.Cidade & "', '" & objUsuario.Estado & "', '" & objUsuario.Pais & "', '" & objUsuario.DtCadastro & "')"
+
+            Dim Cmd As New SqlCommand(strSql, conexaoDB)
+            conexaoDB.Open()
+
+            objUsuario.ID = Cmd.ExecuteScalar
+            Return objUsuario.ID
+
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
+
 #End Region
 
 
