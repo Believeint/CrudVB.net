@@ -199,6 +199,22 @@ Public Class Usuario
         End Try
     End Function
 
+    Public Function Excluir(intId As Integer) As Boolean
+        'nonquery
+        Try
+            Dim strConexao = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
+            Dim conexaoDB As New SqlConnection(strConexao)
+            Dim strSql As String = "DELETE Usuario WHERE id=" & intId
+
+            Dim Cmd As New SqlCommand(strSql, conexaoDB)
+            conexaoDB.Open()
+            Cmd.ExecuteNonQuery()
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
 #End Region
 
 
