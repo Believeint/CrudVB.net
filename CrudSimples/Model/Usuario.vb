@@ -158,6 +158,28 @@ Public Class Usuario
 
     End Function
 
+    Public Function Editar(objUsuario As Usuario) As Boolean
+        Try
+            Dim strConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
+            Dim conexaoDB As New SqlConnection(strConexao)
+
+            Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
+            Dim strSql As String = "UPDATE Usuario SET  nome='" & objUsuario.Nome & "',
+                                                        data_nascimento='" & objUsuario.DataNascimento & "',
+                                                        sexo='" & objUsuario.Sexo & "',
+                                                        email='" & objUsuario.Email & "',
+                                                        cidade='" & objUsuario.Cidade & "',
+                                                        estado='" & objUsuario.Estado & "',
+                                                        pais='" & objUsuario.Pais & "' WHERE id=" & objUsuario.ID
+            Dim Cmd As New SqlCommand(strSql)
+            conexaoDB.Open()
+            Cmd.ExecuteNonQuery()
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
 #End Region
 
 
