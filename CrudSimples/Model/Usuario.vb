@@ -127,7 +127,7 @@ Public Class Usuario
     End Function
 
     Public Function Exibir(intId As Integer) As Usuario
-        'datareader
+        'DataReader
         Try
             Dim strConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
             Dim conexaoDB As New SqlConnection(strConexao)
@@ -143,13 +143,13 @@ Public Class Usuario
             objUsuario.ID = intId
 
             objUsuario.Nome = drUsuario("nome")
-            objUsuario.DataNascimento = drUsuario("dt_nascimento")
+            objUsuario.DataNascimento = drUsuario("data_nascimento")
             objUsuario.Sexo = drUsuario("sexo")
             objUsuario.Email = drUsuario("email")
             objUsuario.Cidade = drUsuario("cidade")
             objUsuario.Estado = drUsuario("estado")
             objUsuario.Pais = drUsuario("usuario")
-            objUsuario.DtCadastro = drUsuario("dt_cadastro")
+            objUsuario.DtCadastro = drUsuario("data_cadastro")
 
             Return objUsuario
         Catch ex As Exception
@@ -177,6 +177,25 @@ Public Class Usuario
             Return True
         Catch ex As Exception
             Return False
+        End Try
+    End Function
+
+    Public Function Listar() As DataSet
+        'DataAdapter
+        Try
+            Dim StrConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
+            Dim conexaoDB As New SqlConnection(StrConexao)
+            Dim strSql As String = "SELECT * FROM Usuario"
+
+            Dim Cmd As New SqlDataAdapter(strSql, conexaoDB)
+            conexaoDB.Open()
+
+            Dim dsUsuario As New DataSet
+            Cmd.Fill(dsUsuario, "Usuario")
+
+            Return dsUsuario
+        Catch ex As Exception
+            Return Nothing
         End Try
     End Function
 
