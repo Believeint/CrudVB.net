@@ -11,7 +11,7 @@
     End Sub
 
     Protected Sub btnAddUsuario_Click(sender As Object, e As EventArgs) Handles btnAddUsuario.Click
-        Response.Redirect("RenachListar.aspx")
+        Response.Redirect("IncluirUsuario.aspx")
     End Sub
 
     Protected Sub grvUsuarios_RowCommand(sender As Object, e As GridViewCommandEventArgs) Handles grvUsuarios.RowCommand
@@ -20,6 +20,8 @@
         Dim objUsuario As New Usuario
 
         Session("Usuario") = intId
-        Response.Redirect("RenachExibir")
+        Response.Redirect("ExibirUsuario.aspx")
     End Sub
+
+
 End Class

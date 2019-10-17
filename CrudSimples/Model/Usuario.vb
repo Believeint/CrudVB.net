@@ -185,7 +185,7 @@ Public Class Usuario
         Try
             Dim StrConexao As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\elias.santos\source\repos\CrudSimples\CrudSimples\App_Data\Usuarios.mdf;Integrated Security=True"
             Dim conexaoDB As New SqlConnection(StrConexao)
-            Dim strSql As String = "SELECT * FROM Usuario"
+            Dim strSql As String = "SELECT nome, data_nascimento, sexo, cidade, estado, pais FROM Usuario"
 
             Dim Cmd As New SqlDataAdapter(strSql, conexaoDB)
             conexaoDB.Open()
